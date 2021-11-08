@@ -1,0 +1,22 @@
+{
+  "name": "codingeval08-11",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tailwindcss ./tailwind/src.css -o ./tailwind/tainwind.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gurdeep7/codingEval08-11.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gurdeep7/codingEval08-11/issues"
+  },
+  "homepage": "https://github.com/gurdeep7/codingEval08-11#readme",
+  "dependencies": {
+    "tailwindcss": "^2.2.19"
+  }
+}
