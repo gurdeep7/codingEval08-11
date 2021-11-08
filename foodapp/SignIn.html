@@ -42,6 +42,8 @@
             console.log(res)
             if(res.error == false){
                 fetchdata(data.username,res.token)
+            }else{
+                alert("wrong Details")
             }
         })
         .catch((err)=>{
@@ -51,7 +53,6 @@
         function fetchdata(username,token){
             console.log(username,token)
             fetch(`https://masai-api-mocker.herokuapp.com/user/${username}`,{
-            body: login_details,
             headers :{
                 'Content-Type': "application/json",
                 Authorization : `Bearer ${token}`
@@ -62,7 +63,9 @@
         })
         .then((res)=>{
             console.log(res)
+            localStorage.setItem("user",JSON.stringify(res))
+        window.location.href = "index.html"
         })
-        }
     }
+}
 </script>

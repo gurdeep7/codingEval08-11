@@ -5,9 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../tailwind/tainwind.css">
-    <title>Food App</title>
+    <title>Cart</title>
 </head>
 <body>
+  
     <div class= "flex border-2 h-14 bg-blue-300">
         <button class="bg-green-200 h-8 m-2 w-20 text-lg rounded-3xl">Home</button>
         <div class="flex w-1/4 m-auto h-9 mt-2">
@@ -15,9 +16,8 @@
             <button class="bg-gray-400 h-4/5 m-1 ml-0 w-1/5 rounded-2xl border-2 border-pink-400">Search</button>
         </div>
         <div class="flex w-max float-right h-7">
-            <button class="bg-green-200 h-8 m-2 w-20 text-lg rounded-3xl" onclick="window.location.href='SignUp.html'">Sign Up</button>
-            <button class="bg-green-200 h-8 m-2 w-20 text-lg rounded-3xl" onclick="window.location.href='SignIn.html'">Sign In</button>
-            <button class="bg-green-200 h-8 m-2 w-20 text-lg rounded-3xl"onclick="window.location.href='cart.html'">Cart</button>
+            <button class="bg-green-200 h-8 m-2 w-20 text-lg rounded-3xl" onclick="placeorder()">Place order</button>
+           
 
         </div>
     </div>
@@ -28,41 +28,42 @@
 </html>
 
 <script>
-
+var dishes = document.getElementById("dishes")
     if(localStorage.getItem("cart")===null){
         localStorage.setItem("cart",JSON.stringify([]))
     }
-async function showdata(){
-    let res = await fetch("https://www.themealdb.com/api/json/v1/1/search.php?s=")
-    let data = await res.json();
-    console.log(data.meals)
-    showondom(data.meals)    
-}
-
-function showondom(data){
-    var dishes = document.getElementById("dishes")
-
+function showdata(){
+    let data = JSON.parse(localStorage.getItem("cart"))
+    
     data.forEach(({strMealThumb,strMeal}) => {
         var div = document.createElement("div")
-        div.style.margin = "5px"
         let img = document.createElement("img")
         img.src = strMealThumb
         let title = document.createElement("p")
         title.textContent = strMeal;
-        let button = document.createElement("button")
-        button.textContent = "add to cart"
-        button.onclick = ()=>{
-            addtocart({strMeal,strMealThumb})
-        }
-        button.setAttribute("class","border-2")
-        div.append(img,title,button)
+        div.append(img,title)
         dishes.append(div)
     });
 }
-function addtocart(d){
-    let dishvalue = JSON.parse(localStorage.getItem("cart"))
-    dishvalue.push(d)
-    localStorage.setItem("cart",JSON.stringify(dishvalue))
+function placeorder(){
+    
+ alert("Your order is accepted")
+
+    setTimeout(() => {
+    alert("Your order is being cooked")
+    }, 3000);
+    setTimeout(() => {
+    alert("Your order is ready")
+    }, 8000);
+    setTimeout(() => {
+    alert("Order out for delivery")
+    }, 10000);
+    setTimeout(() => {
+    alert("Order delivered")
+    dishes.innerHTML = "null"
+    localStorage.setItem("cart",JSON.stringify([]))
+    window.location.href = "index.html"
+    }, 12000);
 }
 showdata()
 </script>
