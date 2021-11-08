@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel= "stylesheet" href="../tailwind/tainwind.css">
+    <title>Sign In</title>
+</head>
+<body>
+    <form class="flex flex-col" id="form" onsubmit="Signin(event)">
+        
+        <input class="border-purple-500 border-2 m-4 w-max"  type="text" id="username" placeholder="User Name">
+        <input class="border-purple-500 border-2 m-4 w-max"  type="password" id="password" placeholder="Password">
+        <input class="w-32 rounded-2xl text-3xl" type="submit">
+    
+    </form>
+</body>
+</html>
+<script>
+    function Signin(e){
+        e.preventDefault()
+        var form = document.getElementById("form")
+        var data = {
+            password : form.password.value,
+            username : form.username.value
+        }
+         
+        var login_details = JSON.stringify(data)
+
+        fetch("https://masai-api-mocker.herokuapp.com/auth/login",{
+            method : 'POST',
+            body: login_details,
+            headers :{
+                'Content-Type': "application/json"
+            }
+        })
+        .then((res)=>{
+            return res.json()
+        })
+        .then((res)=>{
+            console.log(res)
+            if(res.error == false){
+                fetchdata(data.username,res.token)
+            }
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
+
+        function fetchdata(username,token){
+            console.log(username,token)
+            fetch(`https://masai-api-mocker.herokuapp.com/user/${username}`,{
+            body: login_details,
+            headers :{
+                'Content-Type': "application/json",
+                Authorization : `Bearer ${token}`
+            }
+        })
+        .then((res)=>{
+            return res.json()
+        })
+        .then((res)=>{
+            console.log(res)
+        })
+        }
+    }
+</script>
